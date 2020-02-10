@@ -28,7 +28,8 @@ public class Console {
 
 
     public static void RunCalc(){
-        Console.println("Welcome to my calculator!");
+
+        Console.println("Welcome to my calculator! Be sure to write your steps and show your work!");
         String s = Console.getStringInput("1 - Basic | 2 - Scientific | 3 - Exit");
 
 
@@ -40,7 +41,7 @@ public class Console {
             SciMenuHome();
         }
 
-        else if (s.equals("xxx")) {
+        else if (s.equals("3")) {
             System.exit(0);
         }
         else {
@@ -50,7 +51,8 @@ public class Console {
     }
 
 
-    public static void BasicMenu() {
+    public static String BasicMenu() {
+        String prevMem = "";
         System.out.printf("%-10s %-10s %-10s", "1 - Add |", "2 - Subtract |", "3 - Multiply \n");
         System.out.printf("%-10s %-10s %-10s", "4 - Divide |", "5 - Square |", "6 - Square Root \n");
         System.out.printf("%-10s %-10s %-10s", "7 - Exponent |", "8 - Inverse |", "9 - Pos <--> Neg \n");
@@ -73,10 +75,13 @@ public class Console {
                     System.out.println(add(pastInt, curInt));
                 }
 
-                pastInt = curInt;
+                pastInt += curInt;
+                prevMem = Double.toString(curInt);
 
             }
+
             BasicMenu();
+
         }
 
         else if (s.equals("2")) {
@@ -94,11 +99,14 @@ public class Console {
                     System.out.println(curInt);
                 } else {
                     System.out.println(subtract(pastInt, curInt));
+
                 }
 
                 pastInt = curInt;
+                prevMem = Double.toString(curInt);
 
             }
+
             BasicMenu();
         }
         else if (s.equals("3")) {
@@ -119,6 +127,7 @@ public class Console {
                 }
 
                 pastInt = curInt;
+                prevMem = Double.toString(curInt);
 
             }
             BasicMenu();
@@ -136,11 +145,15 @@ public class Console {
                 curInt = Double.parseDouble(s);
                 if (pastInt == 0) {
                     System.out.println(curInt);
-                } else {
+                } else if(curInt == 0) {
+                   System.out.println("err");
+                }
+                else{
                     System.out.println(divide(pastInt, curInt));
                 }
 
                 pastInt = curInt;
+                prevMem = Double.toString(curInt);
 
             }
             BasicMenu();
@@ -151,7 +164,10 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Double.parseDouble(s);
             System.out.println(square(curInt));
+            prevMem = Double.toString(curInt);
+
             BasicMenu();
+
         }
         else if (s.equals("6")) {
             //square root
@@ -159,6 +175,8 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Double.parseDouble(s);
             System.out.println(squareRoot(curInt));
+            prevMem = Double.toString(curInt);
+
             BasicMenu();
         }
         else if (s.equals("7")) {
@@ -180,7 +198,9 @@ public class Console {
                 }
 
 
-                pastInt = curInt;
+                pastInt += curInt;
+                prevMem = Double.toString(curInt);
+
 
             }
             BasicMenu();
@@ -191,13 +211,17 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Double.parseDouble(s);
             System.out.println(inverse(curInt));
+            prevMem = Double.toString(curInt);
 
+            BasicMenu();
         } else if (s.equals("9")) {
             //sign change
             double curInt;
             s = Console.getStringInput("Please enter a positive or negative number");
             curInt = Double.parseDouble(s);
             System.out.println(signChange(curInt));
+            prevMem = Double.toString(curInt);
+
             BasicMenu();
         } else if (s.equals("a")) {
             //Clear Error
@@ -219,18 +243,17 @@ public class Console {
             BasicMenu();
 
         }
-
+        return prevMem;
         
     }
 
-    public static void SciMenuHome(){
-        System.out.println("Rotate Display - 1");
-        System.out.println("Memory - 2");
-        System.out.println("Trig Functions - 3");
-        System.out.println("Mode Change - 4");
-        System.out.println("Log Functions - 5");
-        System.out.println("Factorial Functions - 6");
-        System.out.println("Utilities - 7");
+    public static String SciMenuHome(){
+
+        String prevMem = "";
+        System.out.printf("%-10s %-10s %-10s", "1 - Rotate Display", "2 - Memory |", "3 - Trig Functions \n");
+        System.out.printf("%-10s %-10s %-10s", "4 - Mode Change |", "5 - Log Functions |", "6 - Factorial Functions \n");
+        System.out.println("6 - Factorial Functions");
+        System.out.println("7 - Utilities");
         ForAllMenus();
 
        String s = Console.getStringInput("Please select an option");
@@ -256,6 +279,7 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Integer.parseInt(s);
             System.out.println(factorial(curInt));
+            prevMem = Integer.toString(curInt);
             SciMenuHome();
         }
         else if (s.equals("7")) {
@@ -291,14 +315,14 @@ public class Console {
             SciMenuHome();
 
         }
+        return prevMem;
 
     }
 
-    public static void RotateDisplay(){
-        System.out.println("Binary - 1");
-        System.out.println("Octal - 2");
-        System.out.println("Decimal - 3");
-        System.out.println("Hexadecimal - 4");
+    public static String RotateDisplay(){
+        String prevMem = "";
+        System.out.printf("%-10s %-10s %-10s", "1 - Binary", "2 - Octal |", "3 - Decimal \n");
+        System.out.println("4 - Hexadecimal");
         ForAllMenus();
 
         String s = Console.getStringInput("Please select an option");
@@ -308,6 +332,7 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Integer.parseInt(s);
             System.out.println(switchDisplayModeToBinary(curInt));
+            prevMem = Integer.toString(curInt);
             RotateDisplay();
         }
         else if (s.equals("2")) {
@@ -316,6 +341,7 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Integer.parseInt(s);
             System.out.println(switchDisplayModeToOctal(curInt));
+            prevMem = Integer.toString(curInt);
             RotateDisplay();
         }
         else if (s.equals("3")) {
@@ -324,6 +350,7 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Integer.parseInt(s);
             System.out.println(switchDisplayModeToDecimal(curInt));
+            prevMem = Integer.toString(curInt);
             RotateDisplay();
         }
         else if (s.equals("4")) {
@@ -332,6 +359,7 @@ public class Console {
             s = Console.getStringInput("Please enter a number");
             curInt = Integer.parseInt(s);
             System.out.println(switchDisplayModeToHexadecimal(curInt));
+            prevMem = Integer.toString(curInt);
             RotateDisplay();
         }
         else if (s.equals("a")) {
@@ -361,10 +389,11 @@ public class Console {
             RotateDisplay();
 
         }
-        RotateDisplay();
+        return prevMem;
 
     }
-    public static void Memory() {
+    public static String Memory() {
+        String prevMem = "";
         System.out.println("M+ - 1");
         System.out.println("MC - 2");
         System.out.println("MRC - 3");
@@ -430,7 +459,7 @@ public class Console {
             Memory();
 
         }
-
+        return prevMem;
     }
     public static void TrigFunctions(){
         System.out.println("Sin - 1");
@@ -597,7 +626,7 @@ public class Console {
                 System.out.println(inverseLogarithm(pastInt, curInt));
             }
 
-            pastInt = curInt;
+            pastInt += curInt;
 
 
         }
@@ -654,12 +683,9 @@ public class Console {
     }
 
     public static void Utilities(){
-        System.out.println("Temp (F to C) - 1");
-        System.out.println("Temp (C to F) - 2");
-        System.out.println("Temp (F to K) - 3");
-        System.out.println("Temp (K to F) - 4");
-        System.out.println("Temp (C to K) - 5");
-        System.out.println("Temp (K to C) - 6");
+        System.out.printf("%-10s %-10s %-10s", "1 - Temp (F to C)", "2 - Temp (C to F) |", "3 - Temp (F to K) \n");
+        System.out.printf("%-10s %-10s %-10s", "4 - Temp (K to F)", "5 - Temp (C to K) |", "6 - Temp (K to C) \n");
+
         ForAllMenus();
 
         String s = Console.getStringInput("Please select an option");
